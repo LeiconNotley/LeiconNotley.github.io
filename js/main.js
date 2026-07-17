@@ -500,3 +500,44 @@
     });
   });
 })();
+
+// ===== Services Dropdown =====
+document.querySelectorAll('#nav .has-dropdown > a').forEach(link => {
+    link.addEventListener('click', e => {
+        if (window.innerWidth > 960) {
+            e.preventDefault();
+            const parent = link.parentElement;
+            const isOpen = parent.classList.toggle('open');
+            link.setAttribute('aria-expanded', isOpen);
+        }
+    });
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+    if (!e.target.closest('#nav .has-dropdown')) {
+        document.querySelectorAll('#nav .has-dropdown.open').forEach(el => {
+            el.classList.remove('open');
+            el.querySelector('a').setAttribute('aria-expanded', 'false');
+        });
+    }
+});
+
+// Close on Escape key
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('#nav .has-dropdown.open').forEach(el => {
+            el.classList.remove('open');
+            el.querySelector('a').setAttribute('aria-expanded', 'false');
+        });
+    }
+});
+
+// Update job-post-date -----
+const date = new Date();
+date.setDate(date.getDate()-3);
+const formattedDate = date.toLocaleDateString("en-AU", { day: "numeric", month: "short", year:"numeric"});
+document.querySelectorAll(".job-post-date").forEach(element => {element.textContent=formattedDate;});
+
+// Update copyright-year -----
+document.getElementById("copyright-year").textContent = new Date().getFullYear();
